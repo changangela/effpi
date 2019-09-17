@@ -12,7 +12,7 @@ lazy val effpi = (project in file(".")).
   settings(
     name := "effpi",
     version := effpiVersion,
-
+    scalacOptions ++= Seq("-Yexplicit-nulls"),
     scalaVersion := dottyVersion,
     //addCompilerPlugin("uk.ac.ic" %% "effpi-verifier" % "0.0.3"),
   )
