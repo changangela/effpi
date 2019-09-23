@@ -32,7 +32,7 @@ class SchedulingQueue[E] {
   }
 
   def dequeue(): Option[E] = {
-    try { Some(queue.take()) } catch {
+    try { Some(queue.take().nn) } catch {
         case e: InterruptedException =>
           None
       }
