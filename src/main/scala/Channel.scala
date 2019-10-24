@@ -116,7 +116,7 @@ trait QueueInChannel[+A](q: LTQueue[A]) extends AsyncInChannel[A] {
 
   override def receive()(implicit timeout: Duration) = {
     if (!timeout.isFinite) {
-      q.take()
+      q.take().nn
     } else {
       val ret = q.poll(timeout.length, timeout.unit)
       if (ret == null) {
@@ -128,14 +128,14 @@ trait QueueInChannel[+A](q: LTQueue[A]) extends AsyncInChannel[A] {
 
   override def poll() = q.poll() match {
     case null => None
-    case head => Some(head)
+    case head => Some(head.nn)
   }
 
   override def enqueue(i: (Map[ProcVar[_], (_) => Process], List[() => Process], In[AsyncInChannel[Any], Any, Any => Process])): Unit = pendingInProcesses.add(i)
 
   override def dequeue() = pendingInProcesses.poll() match {
     case null => None
-    case head => Some(head)
+    case head => Some(head.nn)
   }
 
 }
